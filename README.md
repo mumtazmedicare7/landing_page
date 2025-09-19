@@ -6,7 +6,7 @@ This project is a responsive, interactive digital business card for Mumtaz Medic
 
 ## Layout
 
-'''
+```
 ├── index.html              # Main HTML file
 ├── style.css               # Custom styles
 ├── assets/
@@ -16,7 +16,7 @@ This project is a responsive, interactive digital business card for Mumtaz Medic
 │   ├── product_&_services.jpeg  # Services image
 │   └── mumtazmedicare.vcf  # Downloadable contact file
 ├── public_key.asc          # Public key for secure messaging
-'''
+```
 
 ## 📬 Contact
 
