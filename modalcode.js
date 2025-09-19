@@ -59,7 +59,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 if (navigator.canShare) {
                     navigator.share({
                         title: document.title,
-                        text: `Mumtaz Medicare\nBusiness Card\n\nVisit:`,
+                        text: "Mumtaz Medicare\nBusiness Card\n\nVisit:",
                         url: window.location.href
                     });
                 } else {
