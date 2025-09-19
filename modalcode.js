@@ -54,9 +54,19 @@ window.addEventListener("DOMContentLoaded", () => {
     if (showQRBtn) {
         showQRBtn.addEventListener("click", () => showModal("qr"));
     }
-    if (shareBtn) {
-        shareBtn.addEventListener("click", () => showModal("copy"));
-    }
+        if (shareBtn) {
+            shareBtn.addEventListener("click", (e) => {
+                if (navigator.canShare) {
+                    navigator.share({
+                        title: document.title,
+                        text: `Mumtaz Medicare\nBusiness Card\n\nVisit:`,
+                        url: window.location.href
+                    });
+                } else {
+                    showModal("copy");
+                }
+            });
+        }
 
     // Copy URL button
     if (copyUrlBtn) {
