@@ -21,106 +21,58 @@
 
 </head> 
 	<body id="body">
-		<div id="modal" style="background-color: rgb(255, 255, 255); visibility: hidden; top: 0rem; opacity: 0; border-radius: 1rem;"> 
-			<button style="background-color: rgb(102, 45, 145);" id="close">
-				<div class="icon iconColor">
-					<svg viewBox="0 0 24 24" 
-							xmlns="http://www.w3.org/2000/svg" 
-							xml:space="preserve" 
-							style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
-						<g>
-							<path style="fill:none" d="M0 0h24v24H0z"></path>
-							<path d="M6 6l12 12M18 6L6 18" style="fill:none;stroke:#fff;stroke-width:2px"></path>
-						</g>
-					</svg>
-				</div> 
-			</button>
+		
+		<div id="modal-overlay" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.4);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
+			<div class="modal-content" style="background:#fff;padding:2rem;border-radius:1rem;box-shadow:0 8px 24px rgba(0,0,0,0.2);max-width:24rem;margin:auto;position:relative;text-align:center;">
+				<div id="locationView" style="display:none;">
+					<h3 class="textColor">Our Location</h3>
+					<div style="margin:1rem 0;">
+						<iframe 
+							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15656.216023885896!2d-60.739200399999994!3d11.1836373!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c49adfd4881bed9%3A0x2224f0cf99c9a7a3!2sMumtaz%20Medi-Care%20%26%20Supplies%20Ltd!5e0!3m2!1sen!2stt!4v1758054432379!5m2!1sen!2stt" 
+							width="100%" height="250" style="border:0;border-radius:0.5rem;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+					</div>
+				</div>
+				<button class="modal-close" id="close" style="position:absolute;top:1rem;right:1rem;font-size:2rem;background:transparent;border:none;color:#333;cursor:pointer;">&times;</button>
 
-			<div style="background-color: rgb(255, 255, 255);" class="media image">
-				<div>
-					<img alt="Product image" src="./media/banner.jpeg"> 
-				</div>  
+				<div id="keyView" style="display:none;">
+					<p class="textColor">Use my public key to send me encrypted messages</p>
+					<a download="" target="_blank" id="dlKey" rel="noreferrer" tabindex="-1" style="background-color: rgb(102, 45, 145);" href="./Mumtaz Medicare's public key.asc">
+						<div class="icon iconColor">
+							<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
+								<path style="fill:none" d="M0 0h24v24H0z"></path>
+								<path d="M21 15v4c0 1.097-.903 2-2 2H5c-1.097 0-2-.903-2-2v-4m4-5 5 5 5-5m-5 5V3" style="fill:none;fill-rule:nonzero;stroke:#fff;stroke-width:2px"></path>
+							</svg>
+						</div>
+						<span class="iconColor">Download Key</span>
+					</a>
+				</div>
+
+				<div id="copyView" style="display:none;">
+					<p class="textColor">Copy and send the URL to share my Business Card</p>
+					<button id="copyURL" style="background-color: rgb(102, 45, 145);">
+						<div class="icon iconColor">
+							<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
+								<path style="fill:none" d="M0 0h24v24H0z"></path>
+								<path d="M22 11a2 2 0 0 0-2-2h-9a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-9Z" style="fill:none;stroke:#fff;stroke-width:2px"></path>
+								<path d="M5 15H4c-1.097 0-2-.903-2-2V4c0-1.097.903-2 2-2h9c1.097 0 2 .903 2 2v1" style="fill:none;fill-rule:nonzero;stroke:#fff;stroke-width:2px"></path>
+							</svg>
+						</div>
+						<span class="iconColor">Copy URL</span>
+					</button>
+				</div>
+
+				<div id="qrView" class="textColor" style="display:none;">
+					<div id="qr"></div>
+					<h3>Scan the QR Code</h3>
+					<p>to view on another device</p>
+				</div>
 			</div>
-			
-			<div id="keyView" style="display: none;">
-				<p class="textColor">Use my public key to send me encrypted messages</p> 
-				<a download="" 
-					target="_blank" 
-					id="dlKey" 
-					rel="noreferrer" 
-					tabindex="-1" 
-					style="background-color: rgb(102, 45, 145);" 
-					href="./Mumtaz Medicare's public key.asc">
-					
-					<div class="icon iconColor">
-						<svg viewBox="0 0 24 24" 
-							xmlns="http://www.w3.org/2000/svg" 
-							xml:space="preserve" 
-							style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
-							
-							<path style="fill:none" d="M0 0h24v24H0z"></path>
-							<path 
-								d="M21 15v4c0 1.097-.903 2-2 2H5c-1.097 0-2-.903-2-2v-4m4-5 5 5 5-5m-5 5V3"
-								style="fill:none;fill-rule:nonzero;stroke:#fff;stroke-width:2px">
-							</path>
-						</svg>
-					</div> 
-					<span class="iconColor">Download Key</span>
-				</a>
-				
-			</div> 
-				
-			<div id="copyView" style="display: none;"><p class="textColor">
-				  Copy and send the URL to share my Business Card
-				</p> 
-				<button id="copyURL" style="background-color: rgb(102, 45, 145);">
-					<div class="icon iconColor">
-						<svg 
-							viewBox="0 0 24 24" 
-							xmlns="http://www.w3.org/2000/svg" 
-							xml:space="preserve" 
-							style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:2">
-							
-							<path style="fill:none" d="M0 0h24v24H0z"></path>
-							<path 
-								d="M22 11a2 2 0 0 0-2-2h-9a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-9Z"
-								style="fill:none;stroke:#fff;stroke-width:2px">
-							</path>
-							
-							<path 
-								d="M5 15H4c-1.097 0-2-.903-2-2V4c0-1.097.903-2 2-2h9c1.097 0 2 .903 2 2v1" 
-								style="fill:none;fill-rule:nonzero;stroke:#fff;stroke-width:2px">
-							</path>
-						</svg>
-					</div> 
-					<span class="iconColor">Copy URL</span>
-				</button>
-			</div> 
-			
-			<div id="qrView" class="textColor" style="display: block;">
-				<div id="qr">
-			
-				<!--?xml version="1.0" standalone="yes"?-->
-				<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 256 256">
-					<rect x="0" y="0" width="256" height="256" style="fill:#ffffff;shape-rendering:crispEdges;"></rect>
-					<path 
-						x="0" 
-						y="0" 
-						style="fill:#000000;
-						shape-rendering:crispEdges;" 
-						d="">
-					</path>
-				</svg>
-				</div> 
-				<h3>Scan the QR Code</h3> 
-				<p>to view on another device</p>
-			</div>
-		</div> 
+		</div>
 
 		<header>
 			<div id="modal-actions" style="display: flex;">
 				<div>
-					<a id="showLocation" style="visibility: hidden;">
+					<a id="showLocation" style="cursor:pointer;visibility:visible;">
 						<div class="icon modal-actions">
 							<svg 
 								viewBox="0 0 24 24" 
@@ -407,16 +359,6 @@
 					<div>
 						<img src="./media/product_&amp;_services.jpeg" alt="Product image"> 
 					</div>
-				</div>
-			</div>
-			
-			<div>
-				<div class="media embedded" style="background-color: rgb(255, 255, 255);">
-					<iframe 
-						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15656.216023885896!2d-60.739200399999994!3d11.1836373!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c49adfd4881bed9%3A0x2224f0cf99c9a7a3!2sMumtaz%20Medi-Care%20%26%20Supplies%20Ltd!5e0!3m2!1sen!2stt!4v1758054432379!5m2!1sen!2stt" 
-						frameborder="0" 
-						allowfullscreen="allowfullscreen">
-					</iframe>
 				</div>
 			</div>
 

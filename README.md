@@ -5,6 +5,8 @@
 This project is a responsive, interactive digital business card for Mumtaz Medicare & Supplies Ltd, a provider of medical equipment and healthcare products. It serves as a compact online identity, enabling quick access to contact details, services, and social media links.
 
 ## Layout
+
+'''
 ├── index.html              # Main HTML file
 ├── style.css               # Custom styles
 ├── assets/
@@ -14,6 +16,7 @@ This project is a responsive, interactive digital business card for Mumtaz Medic
 │   ├── product_&_services.jpeg  # Services image
 │   └── mumtazmedicare.vcf  # Downloadable contact file
 ├── public_key.asc          # Public key for secure messaging
+'''
 
 ## 📬 Contact
 

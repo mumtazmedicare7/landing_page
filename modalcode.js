@@ -1,99 +1,85 @@
-// Element references
 
-let modalOverlay = document.getElementById("modal"),
-    closemodal = document.getElementById("close"),
-    keyView = document.getElementById("keyView"),
-    copyView = document.getElementById("copyView"),
-    copyUrl = document.getElementById("copyURL"),
-    qrv = document.getElementById("qrView"),
-    qr = document.getElementById("qr"),
-    s = document.getElementById("share"),
-    sqr = document.getElementById("showQR"),
-    sk = document.getElementById("showKey");
-    locationModal = document.getElementById("locationView");
-    showLocation = document.getElementById("showLocation");
+// New modal logic for modal-overlay and card
 
-// Toggle modal visibility
-function toggleModal(overlay) {
-    if (overlay.style.visibility == "hidden") {
-        overlay.style.visibility = "visible";
-       overlay.style.opacity = 1;
-    } else {
-        overlay.style.opacity = 0;
-        setTimeout(() => {
-            overlay.style.visibility = "hidden";
-        }, 200);
+window.addEventListener("DOMContentLoaded", () => {
+    const modalOverlay = document.getElementById("modal-overlay");
+    const closeBtn = document.getElementById("close");
+    const keyView = document.getElementById("keyView");
+    const copyView = document.getElementById("copyView");
+    const qrView = document.getElementById("qrView");
+    const copyUrlBtn = document.getElementById("copyURL");
+    const qr = document.getElementById("qr");
+        const showKeyBtn = document.getElementById("showKey");
+        const showQRBtn = document.getElementById("showQR");
+        const shareBtn = document.getElementById("share");
+        const showLocationBtn = document.getElementById("showLocation");
+        const locationView = document.getElementById("locationView");
+
+        function showModal(view) {
+            modalOverlay.style.display = "flex";
+            // Hide all views
+            if (keyView) keyView.style.display = "none";
+            if (copyView) copyView.style.display = "none";
+            if (qrView) qrView.style.display = "none";
+            if (locationView) locationView.style.display = "none";
+            // Show selected view
+            if (view === "key") {
+                if (keyView) keyView.style.display = "block";
+            } else if (view === "copy") {
+                if (copyView) copyView.style.display = "block";
+            } else if (view === "qr") {
+                if (qrView) qrView.style.display = "block";
+            } else if (view === "location") {
+                if (locationView) locationView.style.display = "block";
+            }
+        }
+    // Location button
+    if (showLocationBtn) {
+        showLocationBtn.addEventListener("click", () => showModal("location"));
     }
-}
 
-// Hide element
-function dN(element) {
-    element.style.display = "none";
-}
+    function hideModal() {
+        modalOverlay.style.display = "none";
+    }
 
-// On page load
-window.addEventListener("load", () => {
-    document.querySelector("#modal-actions").style.display = "flex";
-    qr.innerHTML = new QRCode({
-        content: window.location.href,
-        container: "svg-viewbox",
-        join: true,
-        ecl: "L",
-        padding: 0
-    }).svg();
-});
+    // Close button
+    if (closeBtn) {
+        closeBtn.addEventListener("click", hideModal);
+    }
 
-// Share button logic
-if (navigator.canShare) {
-    s.addEventListener("click", () => {
-        navigator.share({
-            title: document.title,
-            text: "You can view my Digital Business Card here:",
-            url: window.location.href
+    // Modal-actions triggers
+    if (showKeyBtn) {
+        showKeyBtn.addEventListener("click", () => showModal("key"));
+    }
+    if (showQRBtn) {
+        showQRBtn.addEventListener("click", () => showModal("qr"));
+    }
+    if (shareBtn) {
+        shareBtn.addEventListener("click", () => showModal("copy"));
+    }
+
+    // Copy URL button
+    if (copyUrlBtn) {
+        copyUrlBtn.addEventListener("click", async () => {
+            await navigator.clipboard.writeText(window.location.href);
+            const span = copyUrlBtn.querySelector("span");
+            if (span) {
+                span.textContent = "Copied!";
+                setTimeout(() => {
+                    span.textContent = "Copy URL";
+                }, 1200);
+            }
         });
-    });
-} else {
-    s.addEventListener("click", () => {
-        toggleModal(modalOverlay);
-        copyView.style.display = "flex";
-        dN(qrv);
-        if (keyView) dN(keyView);
-    });
-}
+    }
 
-// Show QR view
-sqr.addEventListener("click", () => {
-    toggleModal(modalOverlay);
-    qrv.style.display = "block";
-    dN(copyView);
-    if (keyView) dN(keyView);
-});
-
-// Show key view
-if (sk) {
-    sk.addEventListener("click", () => {
-        toggleModal(modalOverlay);
-        if (keyView) keyView.style.display = "flex";
-        dN(copyView);
-        dN(qrv);
-    });
-}
-
-// Close modal
-closemodal.addEventListener("click", () => toggleModal(modalOverlay));
-
-// Copy URL to clipboard
-copyUrl.addEventListener("click", async () => {
-    let e = copyUrl.querySelectorAll(".iconColor")[1];
-    await navigator.clipboard.writeText(window.location.href).then(() => {
-        e.innerText = "Copied";
-        setTimeout(() => {
-            e.innerText = "Copy URL";
-        }, 1000);
-    });
-});
-
-showLocation.addEventListener("click", () => {
-  toggleModal(modalOverlay)
-  toggleModal(locationModal);
+    // Generate QR code
+    if (qr) {
+        qr.innerHTML = new QRCode({
+            content: window.location.href,
+            container: "svg-viewbox",
+            join: true,
+            ecl: "L",
+            padding: 0
+        }).svg();
+    }
 });
